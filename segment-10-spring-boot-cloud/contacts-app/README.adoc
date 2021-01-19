@@ -42,6 +42,7 @@ echo --- >> deployment.yaml
 
 kubectl create service contacts-app --tcp=8080:8080 --dry-run=client -o=yaml >> deployment.yaml
 ----
+
 == ConfigMap
 
 [source,shell]
@@ -61,4 +62,3 @@ This is the final deployment file:
 include::k8s-deployment.yaml[]
 ----
 
-== References
