@@ -1,0 +1,49 @@
+= Contacts App - UI
+
+:icons: font
+
+== Requirements
+
+- Have an account for a Docker registry images. You can use https://hub.docker.com/[Docker^] or https://quay.io/[Quay.io^]
+- Have a Kubernetes instances. You can run this using either https://minikube.sigs.k8s.io/docs/[Minikube^], https://cloud.redhat.com/openshift/install/crc/installer-provisioned[CodeReady Containers] or https://www.docker.com/products/docker-desktop[Docker Desktop^]
+
+== Generate Docker Image
+
+- You can generate a Docker image with the following command:
++
+[source,shell]
+----
+./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=<your-id>/contacts-app-ui:v1
+----
+
+- Push you image
++
+[source,shell]
+docker push <your-id>/contacts-app-ui:v1
+
+
+WARNING: Use your docker id and replace it.
+
+
+== Creating a Kubernetes deployment
+
+- You can generate the deployment with the following commands, make the necessary adjustments and deploy it to your Kubernetes instance.
++
+[source,shell]
+----
+kubectl create deployment contacts-app-ui --image=<your-id>/contacts-app-ui:v1 --dry-run=client -o=yaml > k8s-deployment.yaml
+
+echo --- >> k8s-deployment.yaml
+
+kubectl create service loadbalancer contacts-app-ui --tcp=8080:8080 --dry-run=client -o=yaml >> k8s-deployment.yaml
+----
+
+== Deployment
+
+This is the final deployment file:
+
+[source,yaml,linenums]
+.k8s-deployment.yaml
+----
+include::k8s-deployment.yaml[]
+----
