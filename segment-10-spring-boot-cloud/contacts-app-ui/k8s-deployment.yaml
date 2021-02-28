@@ -41,6 +41,7 @@ metadata:
   labels:
     app: contacts-app-ui
   name: contacts-app-ui
+  namespace: spring
 spec:
   ports:
   - name: 8080-8080
